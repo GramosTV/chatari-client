@@ -12,6 +12,7 @@ const Chat = () => {
   const [error, setError] = useState<string | null>(null);
   const [totalUsers, setTotalUsers] = useState(0);
   const [usersWaiting, setUsersWaiting] = useState(0);
+
   useEffect(() => {
     socket.on('chatStarted', (data) => {
       setIsChatting(true);
@@ -59,35 +60,32 @@ const Chat = () => {
 
   const handleSendMessage = () => {
     if (chatMessage.trim()) {
+      setMessages((prevMessages) => [...prevMessages, { sender: 'You', text: chatMessage }]);
       socket.emit('sendMessage', { message: chatMessage, isBot: isBotChat });
       setChatMessage('');
     }
   };
+
   const connectToRoom = () => {
     socket.emit('connectUser');
   };
+
   const handleBotChat = () => {
     setIsChatting(true);
     setIsBotChat(true);
     setLoading(false);
-    setMessages((prevMessages) => [...prevMessages, { sender: 'System', text: 'You are now chatting with the bot.' }]);
+    setMessages((prevMessages) => [...prevMessages, { sender: 'System', text: 'You are now chatting with a bot.' }]);
   };
 
   return (
-    <div className="chat-container p-4 bg-gray-100 min-h-screen flex flex-col items-center">
+    <div className="chat-container p-6 bg-gray-100 min-h-screen flex flex-col items-center">
       {/* Chat Status */}
+
       <div className="chat-status mb-4 p-2 bg-white shadow-md rounded w-full max-w-lg">
         {loading && !isChatting && <p className="text-gray-500">Looking for a match... Please wait.</p>}
-        {!loading && !isChatting && (
-          <div className="flex flex-col items-center">
-            <p>No users available. Start chatting with the bot?</p>
-            <button onClick={handleBotChat} className="btn btn-secondary mt-2 bg-blue-500 text-white py-2 px-4 rounded">
-              Chat with Bot
-            </button>
-          </div>
-        )}
-        {isChatting && <p>{isBotChat ? 'You are chatting with the bot.' : "You're chatting with another user."}</p>}
+        {isChatting && <p>{isBotChat ? 'You are chatting with a bot.' : "You're chatting with another user."}</p>}
         {error && <p className="text-red-500 mt-2">{error}</p>}
+        {!loading && !isChatting && <p>Welcome to Chatari!</p>}
       </div>
 
       {/* User Info */}
@@ -102,8 +100,8 @@ const Chat = () => {
           <div
             key={index}
             className={`message mb-2 ${
-              msg.sender === 'ChatBot' || msg.sender === 'System' ? 'text-blue-600' : 'text-black'
-            }`}
+              msg.sender === 'You' ? 'self-end text-right bg-green-100' : 'self-start text-left bg-gray-100'
+            } p-2 rounded`}
           >
             <strong>{msg.sender}:</strong> {msg.text}
           </div>
@@ -112,23 +110,30 @@ const Chat = () => {
 
       {/* Message Input and Send Button */}
       {isChatting ? (
-        <div className="chat-box flex flex-col items-center w-full max-w-lg">
+        <div className="chat-box flex items-center w-full max-w-lg">
           <input
             type="text"
             value={chatMessage}
             onChange={(e) => setChatMessage(e.target.value)}
             placeholder="Type a message"
-            className="input input-bordered w-full max-w-xs mb-2 p-2 border rounded"
+            className="input input-bordered w-full p-2 border rounded mr-2 grow"
           />
-          <button
-            onClick={handleSendMessage}
-            className="btn btn-primary w-full max-w-xs bg-green-500 text-white py-2 px-4 rounded"
-          >
+          <button onClick={handleSendMessage} className="btn btn-primary bg-green-500 text-white py-2 px-6 rounded">
             Send
           </button>
         </div>
       ) : (
-        <button onClick={connectToRoom}>Connect to a room</button>
+        !loading &&
+        !isChatting && (
+          <div className="w-full max-w-lg flex justify-around bg-white p-4 rounded shadow-md">
+            <button onClick={connectToRoom} className="btn btn-secondary bg-blue-500 text-white py-2 px-4 rounded">
+              Connect to a room
+            </button>
+            <button onClick={handleBotChat} className="btn btn-secondary bg-blue-500 text-white py-2 px-4 rounded">
+              Chat with Bot
+            </button>
+          </div>
+        )
       )}
     </div>
   );
