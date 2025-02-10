@@ -103,12 +103,12 @@ const Chat = () => {
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
       socket.emit('stopTyping');
-    }, 2500); // Stop typing after 1 second of inactivity
+    }, 2500);
   };
 
   const handleSendMessage = () => {
     if (chatMessage.trim()) {
-      socket.emit('stopTyping'); // Stop typing when the message is sent
+      socket.emit('stopTyping');
       setMessages((prevMessages) => [...prevMessages, { sender: 'You', text: chatMessage }]);
       socket.emit('sendMessage', { message: chatMessage, isBot: isBotChat });
       setChatMessage('');
@@ -152,7 +152,7 @@ const Chat = () => {
         {error && <p className="text-red-500 mt-2">{error}</p>}
         {!loading && !isChatting && <p>Welcome to Chatari!</p>}
       </div>
-      {/* {roomMateTyping && <p className="text-gray-500">Your room mate is typing...</p>} */}
+
       {/* User Info */}
       <div className="user-info mb-4 p-2 bg-white shadow-md rounded w-full max-w-lg">
         <p>Online Users: {totalUsers}</p>

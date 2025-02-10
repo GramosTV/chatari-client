@@ -1,46 +1,77 @@
-# Getting Started with Create React App
+# Chatari Client 💬
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Chatari is a React-based chat client built with Create React App and TailwindCSS. It allows users to either join a real-time chat room with other users or chat with a bot via socket communication on port 3001.
 
-## Available Scripts
+## Showcase 🎥
+
+Here are some GIFs showcasing the website:
+
+### Chatting with a user 👥
+
+<img src="./readme-gifs/user-chat.gif"/>
+
+### Chatting with a bot (GPT-4) 🤖
+
+<img src="./readme-gifs/bot-chat.gif"/>
+
+## Features ✨
+
+- **Real-time Chat:** Connect to a room and chat with other users.
+- **Bot Chat:** Option to chat with a bot.
+- **Typing Indicator:** Displays when the other party is typing.
+- **Real-time User Info:** Shows online users and users waiting for a chat.
+
+## Project Structure 📁
+
+- **public/**  
+   Contains static assets and the HTML template.
+- **src/**
+  - [App.tsx](src/App.tsx) – Renders the chat app and a background.
+  - **components/**
+    - [ChatApp.tsx](src/components/ChatApp.tsx) – Implements the chat logic and socket integration.
+    - [Background.tsx](src/components/Background.tsx) – Renders a decorative SVG background.
+
+## Getting Started 🚀
+
+1. **Install Dependencies:**
+
+   ```sh
+   yarn install
+   ```
+
+2. **Start the Development Server:**
+
+   ```sh
+   yarn start
+   ```
+
+   This starts the React app on [http://localhost:3000](http://localhost:3000).
+
+3. **Backend Server:**
+
+   Ensure that a Socket.IO server is running on `http://localhost:3001` for handling real-time chat events.
+
+## Available Scripts 📜
 
 In the project directory, you can run:
 
-### `yarn start`
+- **`yarn start`**  
+   Runs the app in development mode.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **`yarn build`**  
+   Builds the app for production to the `build` folder.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **`yarn test`**  
+   Launches the test runner.
 
-### `yarn test`
+- **`yarn eject`**  
+   Removes the single build dependency from your project. **Note:** This is a one-way operation.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Learn More 📚
 
-### `yarn build`
+- Learn [React](https://reactjs.org/) for building user interfaces.
+- Read the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started) for more details.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## License 📄
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is open source and available for modification.
